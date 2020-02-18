@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class TimelineActivity extends AppCompatActivity
     RecyclerView  rvTweets;
     List<Tweet>   tweets;
     TweetsAdapter adapter;
+    SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +35,22 @@ public class TimelineActivity extends AppCompatActivity
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApp.getRestClient(this);
+
+        swipeContainer = findViewById(R.id.swipeContainer);
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                Log.i(TAG, "fetching new data");
+                populateHomeTimeline();
+            }
+        });
 
         //Find the rv
         rvTweets = findViewById(R.id.rvTweet);
@@ -55,8 +73,9 @@ public class TimelineActivity extends AppCompatActivity
                 JSONArray jsonArray = json.jsonArray;
                 try
                 {
-                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
-                    adapter.notifyDataSetChanged();
+                    adapter.clear();
+                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+                    swipeContainer.setRefreshing(false);
                 } catch (JSONException e)
                 {
                     Log.e(TAG, "json exception",e);
