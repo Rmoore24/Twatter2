@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:background="#3C3F41">
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -14,12 +15,13 @@
 
     <TextView
         android:id="@+id/tvScreenName"
-        android:layout_width="77dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:textColor="#FFFFFF"
         tools:text="Deez44" />
 
     <TextView
@@ -27,8 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvScreenName"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:textColor="#FFFFFF"
         tools:text="Tweet about Trump" />
 </RelativeLayout>

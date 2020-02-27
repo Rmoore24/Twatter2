@@ -23,6 +23,6 @@ public class TweetWithUser
             tweet.user =  tweetWithUsers.get(i).user;
             tweets.add(tweet);
         }
-        return null;
+        return tweets;
     }
 }
